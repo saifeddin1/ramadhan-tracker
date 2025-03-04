@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadhan Habit Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="english">
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="crescent-icon"></div>
+                <h1 class="app-title">Ramadhan Tracker</h1>
+            </div>
+            <div class="nav">
+                <button class="language-switch" id="languageToggle">
+                    <i class="fas fa-globe"></i>
+                    <span class="language-text">العربية</span>
+                </button>
+                <button class="btn" id="addHabitBtn">
+                    <i class="fas fa-plus"></i>
+                    <span class="add-habit-text">Add Habit</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard">
+            <div class="card ramadhan-info">
+                <h2 class="card-title">
+                    <i class="fas fa-moon"></i>
+                    <span class="ramadhan-info-title">Ramadhan Progress</span>
+                </h2>
+                <div class="ramadhan-progress">
+                    <div class="progress-circle">
+                        <svg class="progress-svg" viewBox="0 0 160 160">
+                            <circle class="progress-circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="progress-circle-value" cx="80" cy="80" r="70" style="stroke-dashoffset: 220;"></circle>
+                        </svg>
+                        <div class="progress-text">15/30</div>
+                    </div>
+                    <div class="ramadhan-stats">
+                        <div class="stat-card">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label day-label">Days</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">85%</div>
+                            <div class="stat-label habit-completion-label">Habits</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">7</div>
+                            <div class="stat-label streak-label">Streak</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prayer-times">
+                    <h3 class="card-title">
+                        <i class="fas fa-clock"></i>
+                        <span class="prayer-times-title">Prayer Times</span>
+                    </h3>
+                    <div class="prayer-times-list">
+                        <div class="prayer-time-item">
+                            <div class="prayer-name">
+                                <i class="fas fa-sun"></i>
+                                <span class="fajr-label">Fajr</span>
+                            </div>
+                            <div class="prayer-time">4:35 AM</div>
+                        </div>
+                        <div class="prayer-time-item">
+                            <div class="prayer-name">
+                                <i class="fas fa-sun"></i>
+                                <span class="dhuhr-label">Dhuhr</span>
+                            </div>
+                            <div class="prayer-time">12:15 PM</div>
+                        </div>
+                        <div class="prayer-time-item next-prayer">
+                            <div class="prayer-name">
+                                <i class="fas fa-sun"></i>
+                                <span class="asr-label">Asr</span>
+                            </div>
+                            <div class="prayer-time">3:45 PM</div>
+                        </div>
+                        <div class="prayer-time-item">
+                            <div class="prayer-name">
+                                <i class="fas fa-sun"></i>
+                                <span class="maghrib-label">Maghrib</span>
+                            </div>
+                            <div class="prayer-time">6:28 PM</div>
+                        </div>
+                        <div class="prayer-time-item">
+                            <div class="prayer-name">
+                                <i class="fas fa-moon"></i>
+                                <span class="isha-label">Isha</span>
+                            </div>
+                            <div class="prayer-time">7:45 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="tabs">
+                    <div class="tab active" data-tab="habits">
+                        <span class="habits-tab-label">Habits</span>
+                    </div>
+                    <div class="tab" data-tab="quran">
+                        <span class="quran-tab-label">Quran</span>
+                    </div>
+                    <div class="tab" data-tab="duas">
+                        <span class="duas-tab-label">Duas</span>
+                    </div>
+                </div>
+
+                <div class="tab-content active" id="habits-tab">
+                    <div class="card">
+                        <div class="habits-header">
+                            <h2 class="habits-title">
+                                <span class="daily-habits-label">Daily Habits</span>
+                            </h2>
+                            <div class="calendar-navigation">
+                                <button class="btn btn-secondary" id="prevDay">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <span class="current-date">March 4, 2025</span>
+                                <button class="btn btn-secondary" id="nextDay">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="calendar">
+                            <!-- Calendar days will be generated by JavaScript -->
+                        </div>
+
+                        <div class="habits-container" id="habitsContainer">
+                            <!-- Habits will be generated by JavaScript -->
+                        </div>
+
+                        <div class="empty-state" id="emptyHabitsState" style="display:none;">
+                            <i class="fas fa-tasks"></i>
+                            <p class="empty-state-text no-habits-text">No habits added yet. Start tracking your Ramadhan habits by adding one!</p>
+                            <button class="btn" id="emptyStateAddBtn">
+                                <i class="fas fa-plus"></i>
+                                <span class="add-first-habit-text">Add Your First Habit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="quran-tab">
+                    <div class="card">
+                        <h2 class="card-title">
+                            <i class="fas fa-book-open"></i>
+                            <span class="quran-progress-label">Quran Progress</span>
+                        </h2>
+                        <div class="quran-progress" id="quranProgressContainer">
+                            <!-- Quran progress will be generated by JavaScript -->
+                        </div>
+                        <div class="empty-state" id="emptyQuranState">
+                            <i class="fas fa-book"></i>
+                            <p class="empty-state-text no-quran-text">Start tracking your Quran reading progress for Ramadhan.</p>
+                            <button class="btn" id="startQuranTrackingBtn">
+                                <i class="fas fa-plus"></i>
+                                <span class="start-quran-tracking-text">Start Tracking</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="duas-tab">
+                    <div class="card">
+                        <h2 class="card-title">
+                            <i class="fas fa-pray"></i>
+                            <span class="ramadhan-duas-label">Ramadhan Duas</span>
+                        </h2>
+                        <div class="dua-list">
+                            <div class="dua-card">
+                                <div class="dua-arabic">اللَّهُمَّ إِنِّي أَسْأَلُكَ فِي هَذَا الشَّهْرِ رِضَاكَ وَالْجَنَّةَ، وَأَعُوذُ بِكَ مِنْ سَخَطِكَ وَالنَّارِ</div>
+                                <div class="dua-translation">O Allah, I ask You in this month for Your pleasure and Paradise, and I seek refuge in You from Your anger and the Fire.</div>
+                                <div class="dua-reference">Dua for Ramadhan</div>
+                            </div>
+                            <div class="dua-card">
+                                <div class="dua-arabic">اللَّهُمَّ اجْعَلْ صِيَامِي فِيهِ صِيَامَ الصَّائِمِينَ وَقِيَامِي فِيهِ قِيَامَ الْقَائِمِينَ</div>
+                                <div class="dua-translation">O Allah, make my fasts in it the fasts of those who fast (sincerely), and my standing in it the standing of those who stand (in prayer sincerely).</div>
+                                <div class="dua-reference">Dua for Fasting</div>
+                            </div>
+                            <div class="dua-card">
+                                <div class="dua-arabic">اللَّهُمَّ إِنِّي صَائِمٌ فَلَا تُرُدَّ دُعَائِي</div>
+                                <div class="dua-translation">O Allah, I am fasting, so do not reject my supplication.</div>
+                                <div class="dua-reference">Dua while Fasting</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add Habit Modal -->
+    <div class="modal" id="addHabitModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeHabitModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title add-habit-modal-title">Add New Habit</h2>
+            <form class="add-habit-form" id="addHabitForm">
+                <div class="form-group">
+                    <label class="form-label habit-name-label" for="habitName">Habit Name</label>
+                    <input type="text" id="habitName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label habit-category-label" for="habitCategory">Category</label>
+                    <select id="habitCategory" class="form-select">
+                        <option value="prayer" class="prayer-option">Prayer</option>
+                        <option value="quran" class="quran-option">Quran</option>
+                        <option value="charity" class="charity-option">Charity</option>
+                        <option value="dhikr" class="dhikr-option">Dhikr</option>
+                        <option value="other" class="other-option">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label habit-goal-label" for="habitGoal">Daily Goal</label>
+                    <input type="text" id="habitGoal" class="form-input" placeholder="e.g., 1 page, 30 minutes">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label habit-reminder-label" for="habitReminder">Reminder</label>
+                        <input type="time" id="habitReminder" class="form-input">
+                    </div>
+                    <div class="form-group form-checkbox">
+                        <input type="checkbox" id="repeatDaily">
+                        <label for="repeatDaily" class="repeat-daily-label">Repeat every day during Ramadhan</label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelHabitBtn">
+                            <span class="cancel-label">Cancel</span>
+                        </button>
+                        <button type="submit" class="btn">
+                            <span class="save-habit-label">Save Habit</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Quran Tracking Modal -->
+        <div class="modal" id="quranTrackingModal">
+            <div class="modal-content">
+                <button class="modal-close" id="closeQuranModal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="modal-title quran-tracking-title">Track Quran Reading</h2>
+                <form class="add-habit-form" id="quranTrackingForm">
+                    <div class="form-group">
+                        <label class="form-label surah-label" for="surahSelect">Surah</label>
+                        <select id="surahSelect" class="form-select">
+                            <option value="1">1. Al-Fatihah</option>
+                            <option value="2">2. Al-Baqarah</option>
+                            <option value="3">3. Aal-Imran</option>
+                            <!-- Additional surahs would be added here -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label verses-label" for="versesRead">Ayat/Verses Read</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="number" id="verseStart" class="form-input" placeholder="From" min="1">
+                            <input type="number" id="verseEnd" class="form-input" placeholder="To" min="1">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelQuranBtn">
+                            <span class="cancel-label">Cancel</span>
+                        </button>
+                        <button type="submit" class="btn">
+                            <span class="save-progress-label">Save Progress</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Notification -->
+        <div class="notification" id="notification">
+            <div class="notification-title">
+                <i class="fas fa-check-circle"></i>
+                <span class="notification-title-text">Success</span>
+            </div>
+            <p class="notification-message">Habit has been added successfully!</p>
+        </div>
+    
+        <script>
+            // DOM Elements
+            const body = document.body;
+            const languageToggle = document.getElementById('languageToggle');
+            const addHabitBtn = document.getElementById('addHabitBtn');
+            const emptyStateAddBtn = document.getElementById('emptyStateAddBtn');
+            const addHabitModal = document.getElementById('addHabitModal');
+            const closeHabitModal = document.getElementById('closeHabitModal');
+            const cancelHabitBtn = document.getElementById('cancelHabitBtn');
+            const addHabitForm = document.getElementById('addHabitForm');
+            const habitsContainer = document.getElementById('habitsContainer');
+            const emptyHabitsState = document.getElementById('emptyHabitsState');
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const notification = document.getElementById('notification');
+            const quranTrackingModal = document.getElementById('quranTrackingModal');
+            const startQuranTrackingBtn = document.getElementById('startQuranTrackingBtn');
+            const closeQuranModal = document.getElementById('closeQuranModal');
+            const cancelQuranBtn = document.getElementById('cancelQuranBtn');
+            const quranTrackingForm = document.getElementById('quranTrackingForm');
+            const quranProgressContainer = document.getElementById('quranProgressContainer');
+            const emptyQuranState = document.getElementById('emptyQuranState');
+            const prevDayBtn = document.getElementById('prevDay');
+            const nextDayBtn = document.getElementById('nextDay');
+            const currentDateEl = document.querySelector('.current-date');
+            const calendarContainer = document.querySelector('.calendar');
+    
+            // Translation data
+            const translations = {
+                english: {
+                    appTitle: "Ramadhan Tracker",
+                    languageText: "العربية",
+                    addHabit: "Add Habit",
+                    ramadhanInfo: "Ramadhan Progress",
+                    days: "Days",
+                    habits: "Habits",
+                    streak: "Streak",
+                    prayerTimes: "Prayer Times",
+                    fajr: "Fajr",
+                    dhuhr: "Dhuhr",
+                    asr: "Asr",
+                    maghrib: "Maghrib",
+                    isha: "Isha",
+                    habitsTab: "Habits",
+                    quranTab: "Quran",
+                    duasTab: "Duas",
+                    dailyHabits: "Daily Habits",
+                    noHabits: "No habits added yet. Start tracking your Ramadhan habits by adding one!",
+                    addFirstHabit: "Add Your First Habit",
+                    quranProgress: "Quran Progress",
+                    noQuran: "Start tracking your Quran reading progress for Ramadhan.",
+                    startQuranTracking: "Start Tracking",
+                    ramadhanDuas: "Ramadhan Duas",
+                    addHabitTitle: "Add New Habit",
+                    habitName: "Habit Name",
+                    habitCategory: "Category",
+                    prayerOption: "Prayer",
+                    quranOption: "Quran",
+                    charityOption: "Charity",
+                    dhikrOption: "Dhikr",
+                    otherOption: "Other",
+                    habitGoal: "Daily Goal",
+                    habitReminder: "Reminder",
+                    repeatDaily: "Repeat every day during Ramadhan",
+                    cancel: "Cancel",
+                    saveHabit: "Save Habit",
+                    quranTrackingTitle: "Track Quran Reading",
+                    surah: "Surah",
+                    verses: "Ayat/Verses Read",
+                    saveProgress: "Save Progress",
+                    notificationSuccess: "Success",
+                    habitAdded: "Habit has been added successfully!",
+                    quranAdded: "Quran progress has been saved successfully!"
+                },
+                arabic: {
+                    appTitle: "متتبع رمضان",
+                    languageText: "English",
+                    addHabit: "إضافة عادة",
+                    ramadhanInfo: "تقدم رمضان",
+                    days: "أيام",
+                    habits: "العادات",
+                    streak: "التوالي",
+                    prayerTimes: "أوقات الصلاة",
+                    fajr: "الفجر",
+                    dhuhr: "الظهر",
+                    asr: "العصر",
+                    maghrib: "المغرب",
+                    isha: "العشاء",
+                    habitsTab: "العادات",
+                    quranTab: "القرآن",
+                    duasTab: "الأدعية",
+                    dailyHabits: "العادات اليومية",
+                    noHabits: "لم تتم إضافة عادات بعد. ابدأ بتتبع عادات رمضان عن طريق إضافة واحدة!",
+                    addFirstHabit: "أضف عادتك الأولى",
+                    quranProgress: "تقدم القرآن",
+                    noQuran: "ابدأ بتتبع تقدم قراءة القرآن لرمضان.",
+                    startQuranTracking: "ابدأ التتبع",
+                    ramadhanDuas: "أدعية رمضان",
+                    addHabitTitle: "إضافة عادة جديدة",
+                    habitName: "اسم العادة",
+                    habitCategory: "الفئة",
+                    prayerOption: "الصلاة",
+                    quranOption: "القرآن",
+                    charityOption: "الصدقة",
+                    dhikrOption: "الذكر",
+                    otherOption: "أخرى",
+                    habitGoal: "الهدف اليومي",
+                    habitReminder: "تذكير",
+                    repeatDaily: "تكرار كل يوم خلال رمضان",
+                    cancel: "إلغاء",
+                    saveHabit: "حفظ العادة",
+                    quranTrackingTitle: "تتبع قراءة القرآن",
+                    surah: "سورة",
+                    verses: "الآيات المقروءة",
+                    saveProgress: "حفظ التقدم",
+                    notificationSuccess: "نجاح",
+                    habitAdded: "تمت إضافة العادة بنجاح!",
+                    quranAdded: "تم حفظ تقدم القرآن بنجاح!"
+                }
+            };
+    
+            // App state
+            let currentLanguage = 'english';
+            let currentDate = new Date();
+            let habits = JSON.parse(localStorage.getItem('ramadhanHabits')) || [];
+            let quranProgress = JSON.parse(localStorage.getItem('ramadhanQuran')) || [];
+            
+            // Initialize app
+            function initApp() {
+                updateLanguage();
+                renderCalendar();
+                renderHabits();
+                renderQuranProgress();
+                updateRamadhanProgress();
+                checkEmptyStates();
+            }
+    
+            // Language toggle
+            languageToggle.addEventListener('click', () => {
+                currentLanguage = currentLanguage === 'english' ? 'arabic' : 'english';
+                updateLanguage();
+                localStorage.setItem('ramadhanLanguage', currentLanguage);
+            });
+    
+            // Update language
+            function updateLanguage() {
+                body.setAttribute('data-theme', currentLanguage);
+                
+                // Update text elements
+                document.querySelector('.app-title').textContent = translations[currentLanguage].appTitle;
+                document.querySelector('.language-text').textContent = translations[currentLanguage].languageText;
+                document.querySelector('.add-habit-text').textContent = translations[currentLanguage].addHabit;
+                document.querySelector('.ramadhan-info-title').textContent = translations[currentLanguage].ramadhanInfo;
+                document.querySelector('.day-label').textContent = translations[currentLanguage].days;
+                document.querySelector('.habit-completion-label').textContent = translations[currentLanguage].habits;
+                document.querySelector('.streak-label').textContent = translations[currentLanguage].streak;
+                document.querySelector('.prayer-times-title').textContent = translations[currentLanguage].prayerTimes;
+                document.querySelector('.fajr-label').textContent = translations[currentLanguage].fajr;
+                document.querySelector('.dhuhr-label').textContent = translations[currentLanguage].dhuhr;
+                document.querySelector('.asr-label').textContent = translations[currentLanguage].asr;
+                document.querySelector('.maghrib-label').textContent = translations[currentLanguage].maghrib;
+                document.querySelector('.isha-label').textContent = translations[currentLanguage].isha;
+                document.querySelector('.habits-tab-label').textContent = translations[currentLanguage].habitsTab;
+                document.querySelector('.quran-tab-label').textContent = translations[currentLanguage].quranTab;
+                document.querySelector('.duas-tab-label').textContent = translations[currentLanguage].duasTab;
+                document.querySelector('.daily-habits-label').textContent = translations[currentLanguage].dailyHabits;
+                document.querySelector('.no-habits-text').textContent = translations[currentLanguage].noHabits;
+                document.querySelector('.add-first-habit-text').textContent = translations[currentLanguage].addFirstHabit;
+                document.querySelector('.quran-progress-label').textContent = translations[currentLanguage].quranProgress;
+                document.querySelector('.no-quran-text').textContent = translations[currentLanguage].noQuran;
+                document.querySelector('.start-quran-tracking-text').textContent = translations[currentLanguage].startQuranTracking;
+                document.querySelector('.ramadhan-duas-label').textContent = translations[currentLanguage].ramadhanDuas;
+                document.querySelector('.add-habit-modal-title').textContent = translations[currentLanguage].addHabitTitle;
+                document.querySelector('.habit-name-label').textContent = translations[currentLanguage].habitName;
+                document.querySelector('.habit-category-label').textContent = translations[currentLanguage].habitCategory;
+                document.querySelector('.prayer-option').textContent = translations[currentLanguage].prayerOption;
+                document.querySelector('.quran-option').textContent = translations[currentLanguage].quranOption;
+                document.querySelector('.charity-option').textContent = translations[currentLanguage].charityOption;
+                document.querySelector('.dhikr-option').textContent = translations[currentLanguage].dhikrOption;
+                document.querySelector('.other-option').textContent = translations[currentLanguage].otherOption;
+                document.querySelector('.habit-goal-label').textContent = translations[currentLanguage].habitGoal;
+                document.querySelector('.habit-reminder-label').textContent = translations[currentLanguage].habitReminder;
+                document.querySelector('.repeat-daily-label').textContent = translations[currentLanguage].repeatDaily;
+                document.querySelectorAll('.cancel-label').forEach(el => {
+                    el.textContent = translations[currentLanguage].cancel;
+                });
+                document.querySelector('.save-habit-label').textContent = translations[currentLanguage].saveHabit;
+                document.querySelector('.quran-tracking-title').textContent = translations[currentLanguage].quranTrackingTitle;
+                document.querySelector('.surah-label').textContent = translations[currentLanguage].surah;
+                document.querySelector('.verses-label').textContent = translations[currentLanguage].verses;
+                document.querySelector('.save-progress-label').textContent = translations[currentLanguage].saveProgress;
+                document.querySelector('.notification-title-text').textContent = translations[currentLanguage].notificationSuccess;
+            }
+    
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+    
+            // Calendar navigation
+            prevDayBtn.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() - 1);
+                renderCalendar();
+                renderHabits();
+            });
+    
+            nextDayBtn.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() + 1);
+                renderCalendar();
+                renderHabits();
+            });
+    
+            // Calendar rendering
+            function renderCalendar() {
+                currentDateEl.textContent = currentDate.toLocaleDateString(
+                    currentLanguage === 'english' ? 'en-US' : 'ar-SA',
+                    { month: 'long', day: 'numeric', year: 'numeric' }
+                );
+    
+                calendarContainer.innerHTML = '';
+                
+                // Generate calendar days (15 days backward and forward)
+                const startDate = new Date(currentDate);
+                startDate.setDate(startDate.getDate() - 7);
+                
+                for (let i = 0; i < 15; i++) {
+                    const day = new Date(startDate);
+                    day.setDate(day.getDate() + i);
+                    
+                    const dayEl = document.createElement('div');
+                    dayEl.classList.add('calendar-day');
+                    
+                    if (day.toDateString() === currentDate.toDateString()) {
+                        dayEl.classList.add('current');
+                    }
+                    
+                    // Check if day has completed habits
+                    const dateStr = formatDate(day);
+                    const hasCompletedHabits = habits.some(habit => 
+                        habit.completed && habit.completed.includes(dateStr)
+                    );
+                    
+                    if (hasCompletedHabits) {
+                        dayEl.classList.add('completed');
+                    }
+                    
+                    // Check if day has missed habits
+                    const hasMissedHabits = day < new Date() && !hasCompletedHabits;
+                    if (hasMissedHabits && day.toDateString() !== new Date().toDateString()) {
+                        dayEl.classList.add('missed');
+                    }
+                    
+                    dayEl.textContent = day.getDate();
+                    dayEl.addEventListener('click', () => {
+                        currentDate = new Date(day);
+                        renderCalendar();
+                        renderHabits();
+                    });
+                    
+                    calendarContainer.appendChild(dayEl);
+                }
+            }
+    
+            // Format date to YYYY-MM-DD
+            function formatDate(date) {
+                const d = new Date(date);
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            }
+    
+            // Render habits for current date
+            function renderHabits() {
+                const dateStr = formatDate(currentDate);
+                habitsContainer.innerHTML = '';
+                
+                habits.forEach((habit, index) => {
+                    const habitEl = document.createElement('div');
+                    habitEl.classList.add('habit-item');
+                    
+                    const isCompleted = habit.completed && habit.completed.includes(dateStr);
+                    
+                    habitEl.innerHTML = `
+                        <div class="habit-info">
+                            <div class="habit-name">${habit.name}</div>
+                            <div class="habit-streak">
+                                <i class="fas fa-fire"></i>
+                                <span>${calculateStreak(habit)} ${translations[currentLanguage].streak}</span>
+                            </div>
+                        </div>
+                        <div class="habit-actions">
+                            <button class="habit-toggle ${isCompleted ? 'completed' : ''}" data-index="${index}">
+                                <i class="fas ${isCompleted ? 'fa-check' : 'fa-plus'}"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    habitsContainer.appendChild(habitEl);
+                });
+                
+                // Add event listeners to habit toggles
+                document.querySelectorAll('.habit-toggle').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const index = btn.getAttribute('data-index');
+                        toggleHabitCompletion(index);
+                    });
+                });
+                
+                checkEmptyStates();
+            }
+    
+            // Toggle habit completion
+            function toggleHabitCompletion(index) {
+                const habit = habits[index];
+                const dateStr = formatDate(currentDate);
+                
+                if (!habit.completed) {
+                    habit.completed = [];
+                }
+                
+                const completedIndex = habit.completed.indexOf(dateStr);
+                if (completedIndex === -1) {
+                    habit.completed.push(dateStr);
+                } else {
+                    habit.completed.splice(completedIndex, 1);
+                }
+                
+                localStorage.setItem('ramadhanHabits', JSON.stringify(habits));
+                renderHabits();
+                updateRamadhanProgress();
+                renderCalendar();
+            }
+    
+            // Calculate habit streak
+            function calculateStreak(habit) {
+                if (!habit.completed || habit.completed.length === 0) {
+                    return 0;
+                }
+                
+                let streak = 0;
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                for (let i = 0; i < 30; i++) {
+                    const checkDate = new Date(today);
+                    checkDate.setDate(checkDate.getDate() - i);
+                    const dateStr = formatDate(checkDate);
+                    
+                    if (habit.completed.includes(dateStr)) {
+                        streak++;
+                    } else {
+                        break;
+                    }
+                }
+                
+                return streak;
+            }
+    
+            // Render Quran progress
+            function renderQuranProgress() {
+                quranProgressContainer.innerHTML = '';
+                
+                if (quranProgress.length === 0) {
+                    emptyQuranState.style.display = 'flex';
+                    return;
+                }
+                
+                emptyQuranState.style.display = 'none';
+                
+                // Group by surah
+                const surahProgress = {};
+                quranProgress.forEach(entry => {
+                    if (!surahProgress[entry.surah]) {
+                        surahProgress[entry.surah] = {
+                            name: `Surah ${entry.surah}`,
+                            verses: []
+                        };
+                    }
+                    
+                    for (let i = entry.verseStart; i <= entry.verseEnd; i++) {
+                        if (!surahProgress[entry.surah].verses.includes(i)) {
+                            surahProgress[entry.surah].verses.push(i);
+                        }
+                    }
+                });
+                
+                // Render each surah progress
+                Object.values(surahProgress).forEach(surah => {
+                    const surahEl = document.createElement('div');
+                    surahEl.classList.add('surah-progress');
+                    
+                    // Assume each surah has approximately 100 verses (this is just an example)
+                    const totalVerses = 100;
+                    const progress = (surah.verses.length / totalVerses) * 100;
+                    
+                    surahEl.innerHTML = `
+                        <div class="surah-header">
+                            <div class="surah-name">
+                                <i class="fas fa-book"></i>
+                                ${surah.name}
+                            </div>
+                            <div class="surah-progress-text">${surah.verses.length} verses</div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-value" style="width: ${progress}%"></div>
+                        </div>
+                    `;
+                    
+                    quranProgressContainer.appendChild(surahEl);
+                });
+            }
+    
+            // Update Ramadhan progress
+            function updateRamadhanProgress() {
+                // Assuming Ramadhan is 30 days, and we're on day 15
+                const totalDays = 30;
+                const currentDay = 15;
+                const progressCircle = document.querySelector('.progress-circle-value');
+                const progressText = document.querySelector('.progress-text');
+                const daysValue = document.querySelector('.stat-value:nth-child(1)');
+                
+                // Calculate habit completion percentage
+                let totalCompletions = 0;
+                let totalPossibleCompletions = 0;
+                
+                if (habits.length > 0) {
+                    habits.forEach(habit => {
+                        totalCompletions += habit.completed ? habit.completed.length : 0;
+                        totalPossibleCompletions += currentDay; // Assumes each habit should be done every day
+                    });
+                }
+                
+                const habitCompletionPercentage = totalPossibleCompletions > 0 
+                    ? Math.round((totalCompletions / totalPossibleCompletions) * 100) 
+                    : 0;
+                
+                // Find longest streak across all habits
+                let longestStreak = 0;
+                habits.forEach(habit => {
+                    const streak = calculateStreak(habit);
+                    if (streak > longestStreak) {
+                        longestStreak = streak;
+                    }
+                });
+                
+                // Update UI
+                const circumference = 2 * Math.PI * 70; // Circle radius is 70
+                const offset = circumference - (currentDay / totalDays) * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+                progressText.textContent = `${currentDay}/${totalDays}`;
+                daysValue.textContent = currentDay;
+                document.querySelector('.stat-value:nth-child(2)').textContent = `${habitCompletionPercentage}%`;
+                document.querySelector('.stat-value:nth-child(3)').textContent = longestStreak;
+            }
+    
+            // Check empty states
+            function checkEmptyStates() {
+                if (habits.length === 0) {
+                    emptyHabitsState.style.display = 'flex';
+                    habitsContainer.style.display = 'none';
+                } else {
+                    emptyHabitsState.style.display = 'none';
+                    habitsContainer.style.display = 'flex';
+                }
+            }
+    
+            // Modal controls
+            addHabitBtn.addEventListener('click', () => {
+                addHabitModal.classList.add('active');
+            });
+            
+            emptyStateAddBtn.addEventListener('click', () => {
+                addHabitModal.classList.add('active');
+            });
+            
+            closeHabitModal.addEventListener('click', () => {
+                addHabitModal.classList.remove('active');
+            });
+            
+            cancelHabitBtn.addEventListener('click', () => {
+                addHabitModal.classList.remove('active');
+            });
+            
+            startQuranTrackingBtn.addEventListener('click', () => {
+                quranTrackingModal.classList.add('active');
+            });
+            
+            closeQuranModal.addEventListener('click', () => {
+                quranTrackingModal.classList.remove('active');
+            });
+            
+            cancelQuranBtn.addEventListener('click', () => {
+                quranTrackingModal.classList.remove('active');
+            });
+    
+            // Form submissions
+            addHabitForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const habitName = document.getElementById('habitName').value;
+                const habitCategory = document.getElementById('habitCategory').value;
+                const habitGoal = document.getElementById('habitGoal').value;
+                const habitReminder = document.getElementById('habitReminder').value;
+                const repeatDaily = document.getElementById('repeatDaily').checked;
+                
+                const newHabit = {
+                    name: habitName,
+                    category: habitCategory,
+                    goal: habitGoal,
+                    reminder: habitReminder,
+                    repeatDaily: repeatDaily,
+                    created: formatDate(new Date()),
+                    completed: []
+                };
+                
+                habits.push(newHabit);
+                localStorage.setItem('ramadhanHabits', JSON.stringify(habits));
+                
+                renderHabits();
+                updateRamadhanProgress();
+                showNotification(translations[currentLanguage].habitAdded);
+                
+                addHabitForm.reset();
+                addHabitModal.classList.remove('active');
+            });
+            
+            quranTrackingForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const surah = document.getElementById('surahSelect').value;
+                const verseStart = parseInt(document.getElementById('verseStart').value);
+                const verseEnd = parseInt(document.getElementById('verseEnd').value);
+                
+                const newProgress = {
+                    date: formatDate(new Date()),
+                    surah: surah,
+                    verseStart: verseStart,
+                    verseEnd: verseEnd
+                };
+                
+                quranProgress.push(newProgress);
+                localStorage.setItem('ramadhanQuran', JSON.stringify(quranProgress));
+                
+                renderQuranProgress();
+                showNotification(translations[currentLanguage].quranAdded);
+                
+                quranTrackingForm.reset();
+                quranTrackingModal.classList.remove('active');
+            });
+    
+            // Show notification
+            function showNotification(message) {
+                const notificationMsg = document.querySelector('.notification-message');
+                notificationMsg.textContent = message;
+                
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+    
+            // Load saved language
+            const savedLanguage = localStorage.getItem('ramadhanLanguage');
+            if (savedLanguage) {
+                currentLanguage = savedLanguage;
+            }
+    
+            // Initialize app
+            initApp();
+        </script>
+    </body>
+</html>
